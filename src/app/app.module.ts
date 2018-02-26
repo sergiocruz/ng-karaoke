@@ -7,7 +7,7 @@ import { PlayerComponent } from './player/player.component';
 import { PlayerService } from './player/player.service';
 import { AudioComponent } from './player/audio/audio.component';
 import { LyricsComponent } from './player/lyrics/lyrics.component'
-
+import { SongsService } from './songs/songs.service'
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { LyricsComponent } from './player/lyrics/lyrics.component'
     HttpModule
   ],
   providers: [
-    PlayerService
+    PlayerService,
+    SongsService
   ],
   bootstrap: [AppComponent]
 })

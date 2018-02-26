@@ -11,8 +11,14 @@ export class PlayerComponent {
 
   @Input() audio: string
   @Input() lyrics: string
+  @Input() delay: number
+  onLyricsTimeUpdate = new EventEmitter<number>()
 
   ngOnInit() {
+  }
+
+  handleAudioTimeUpdate = (time: number) => {
+    this.onLyricsTimeUpdate.emit(time)
   }
 
 }

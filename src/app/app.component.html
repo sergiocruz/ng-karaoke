@@ -1,6 +1,16 @@
 <h1>Karaoke</h1>
 
-<Player
-  audio="/assets/GotInstrumentals-Journey - Don't Stop Believing - Instrumental.mp3"
-  lyrics="/assets/Glee-Don't_Stop_Believin.lrc"
-  ></Player>
+<ul>
+  <li *ngFor="let song of songList">
+    <a href="#" (click)="handleChooseSong($event, song)">{{ song.artist }} - {{ song.title }}</a>
+  </li>
+</ul>
+
+<div *ngIf="currentSong">
+  <Player
+    [audio]="currentSong.audio"
+    [lyrics]="currentSong.lyrics"
+    [delay]="currentSong.lyricDelay"
+    ></Player>
+</div>
+

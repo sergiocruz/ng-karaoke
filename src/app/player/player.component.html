@@ -1,2 +1,10 @@
-<player-audio [src]="audio"></player-audio>
-<player-lyrics [src]="lyrics"></player-lyrics>
+<player-audio
+  [src]="audio"
+  (onCurrentTimeUpdate)="handleAudioTimeUpdate($event)"
+  ></player-audio>
+
+<player-lyrics
+  [src]="lyrics"
+  [delay]="delay"
+  [onCurrentTimeUpdate]="onLyricsTimeUpdate"
+  ></player-lyrics>

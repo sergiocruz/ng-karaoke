@@ -1,3 +1,4 @@
-<p>
-  lyrics works!
-</p>
+<div *ngIf="lyrics">
+  <h3>{{ lyrics.ar }} - {{ lyrics.ti }}</h3>
+  <p>{{ currentLine }}</p>
+</div>

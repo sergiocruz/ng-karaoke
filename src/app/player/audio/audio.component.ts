@@ -24,7 +24,7 @@ export class AudioComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.audio = new Audio()
+    this.audio = this.initAudio()
     this.currentTime = this.service.formatTime(0)
     this.duration = this.service.formatTime(0)
   }
@@ -42,6 +42,10 @@ export class AudioComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadSubscription = Observable
       .fromEvent(this.audio, 'loadeddata')
       .subscribe(this.handleAudioLoaded)
+
+    // Subscribe other events
+    this.audio.addEventListener('playing', this.handleAudioPlayed)
+    this.audio.addEventListener('pause', this.handleAudioPaused)
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -71,6 +75,7 @@ export class AudioComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loadAudioSource(src: string) {
     this.audio.pause()
+    this.handleAudioPaused()
     this.audio.src = src
   }
 
@@ -84,13 +89,21 @@ export class AudioComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onCurrentTimeUpdate.emit(this.audio.currentTime)
   }
 
+  handleAudioPlayed = () => {
+    this.paused = true
+  }
+
+  handleAudioPaused = () => {
+    this.paused = false
+  }
+
   handleAudioPlayPause() {
     if (this.audio.paused) {
       this.audio.play()
-      this.paused = true
+      // this.paused = true
     } else {
       this.audio.pause()
-      this.paused = false
+      // this.paused = false
     }
   }
 
