@@ -1,5 +1,2 @@
-<button (click)="handleAudioPlayPause()">
-  {{ paused ? "Pause" : "Play" }}
-</button>
-
-<p>{{ currentTime }} | {{ duration }} </p>
+<player-audio [src]="audio"></player-audio>
+<player-lyrics [src]="lyrics"></player-lyrics>

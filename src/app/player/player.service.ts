@@ -1,12 +1,32 @@
+import { SimpleChange } from '@angular/core'
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class PlayerService {
 
-  constructor() {}
+  /**
+   * Defines if whether or not a property has changed
+   * and that it is not during component's first load.
+   *
+   * @param {SimpleChange} change
+   * @returns {boolean}
+   *
+   * @memberOf PlayerService
+   */
+  hasPropertyChanged(change: SimpleChange): boolean {
+    return !change.firstChange && change.previousValue !== change.currentValue
+  }
 
-  formatTime(secs) {
-    const secsNum = parseInt(secs, 10)
+  /**
+   * Formats seconds into readable [hh:]?mm:ss format
+   *
+   * @param {number|string} secs
+   * @returns {string} Formatted string
+   *
+   * @memberOf PlayerService
+   */
+  formatTime(secs: number|string): string {
+    const secsNum = parseInt(secs.toString(), 10)
     const hours = Math.floor(secsNum / 3600) % 24
     const minutes = Math.floor(secsNum / 60) % 60
     const seconds = secsNum % 60
