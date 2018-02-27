@@ -13,12 +13,21 @@ export class PlayerComponent {
   @Input() lyrics: string
   @Input() delay: number
   onLyricsTimeUpdate = new EventEmitter<number>()
+  onSpeechStart = new EventEmitter<boolean>()
 
   ngOnInit() {
   }
 
+  handleAudioPlayPause(isPlaying: boolean) {
+    this.onSpeechStart.emit(isPlaying)
+  }
+
   handleAudioTimeUpdate = (time: number) => {
     this.onLyricsTimeUpdate.emit(time)
+  }
+
+  handleSpeechFound(text: string) {
+    console.log('speech match: ', text)
   }
 
 }
