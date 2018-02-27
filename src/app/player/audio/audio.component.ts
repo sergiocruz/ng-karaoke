@@ -10,12 +10,12 @@ import { PlayerService } from '../player.service'
 export class AudioComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() onCurrentTimeUpdate = new EventEmitter<number>()
-  @Output() onLoad = new EventEmitter()
+  @Output() onPlayPause = new EventEmitter<boolean>()
   @Input() src: string = ''
   private audio: HTMLAudioElement
   private timeSubscription: Subscription
   private loadSubscription: Subscription
-  public paused: boolean = false
+  public isPlaying: boolean = false
   public currentTime: string
   public duration: string
 
@@ -80,7 +80,6 @@ export class AudioComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleAudioLoaded = (e: HTMLMediaElementEventMap) => {
-    this.onLoad.emit()
     this.duration = this.service.formatTime(this.audio.duration)
   }
 
@@ -90,11 +89,13 @@ export class AudioComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleAudioPlayed = () => {
-    this.paused = true
+    this.onPlayPause.emit(true)
+    this.isPlaying = true
   }
 
   handleAudioPaused = () => {
-    this.paused = false
+    this.onPlayPause.emit(false)
+    this.isPlaying = false
   }
 
   handleAudioPlayPause() {

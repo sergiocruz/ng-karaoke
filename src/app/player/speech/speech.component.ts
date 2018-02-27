@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Observable, Subscription, } from 'rxjs'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Observable, Subscription } from 'rxjs'
 import { interval } from 'rxjs/observable/interval';
 import { timer } from 'rxjs/observable/timer';
 import { fromEvent } from 'rxjs/observable/fromEvent';
@@ -17,11 +17,12 @@ import { RecognitionService } from './recognition.service'
 })
 export class SpeechComponent implements OnInit, OnDestroy {
 
+  @Input() playPause: EventEmitter<boolean>
+  @Output() onSpeechFound = new EventEmitter<string>()
   private subscriptions: Subscription[] = []
   private recognition: SpeechRecognition
   public isAutoRestarting: boolean = false
   public isRecording: boolean = false
-  public text: string
 
   constructor(
     private RecognitionService: RecognitionService
@@ -35,12 +36,12 @@ export class SpeechComponent implements OnInit, OnDestroy {
     const end$ = fromEvent(this.recognition, 'end')
 
     const onStart = start$.subscribe(() => {
-      console.log('start')
+      // console.log('start')
       this.isRecording = true
 
       result$.timeout(5000).subscribe(null, () => {
         if (this.isRecording) {
-          console.log('timeout, restarting...')
+          // console.log('timeout, restarting...')
           this.isAutoRestarting = true
           this.recognition.stop()
         }
@@ -48,7 +49,7 @@ export class SpeechComponent implements OnInit, OnDestroy {
     })
 
     const onEnd = Observable.merge(stop$, end$).subscribe(() => {
-      console.log('stop or end?')
+      // console.log('stop or end?')
       if (this.isAutoRestarting) {
         this.isAutoRestarting = false
         this.recognition.start()
@@ -62,10 +63,21 @@ export class SpeechComponent implements OnInit, OnDestroy {
       .filter((result: SpeechRecognitionResult) => result.isFinal)
       .map((result: SpeechRecognitionResult) => result[0].transcript)
       .distinct()
-      .subscribe((t: string) => this.text = t)
+      .subscribe((text: string) => {
+        this.onSpeechFound.emit(text)
+      })
+
+    const onPlay = this.playPause
+      .subscribe((isPlaying) => {
+        if (isPlaying && !this.isRecording) {
+          this.recognition.start()
+        } else if (!isPlaying && this.isRecording) {
+          this.recognition.stop()
+        }
+      })
 
     // So we can unsubscribe later
-    this.subscriptions = this.subscriptions.concat([ onStart, onEnd, onResult ])
+    this.subscriptions = this.subscriptions.concat([ onStart, onEnd, onResult, onPlay ])
   }
 
   ngOnDestroy() {

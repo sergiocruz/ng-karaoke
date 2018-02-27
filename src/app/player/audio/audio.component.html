@@ -1,5 +1,5 @@
 <button (click)="handleAudioPlayPause()">
-  {{ paused ? "Pause" : "Play" }}
+  {{ (isPlaying) ? "Pause" : "Play" }}
 </button>
 
 <p>{{ currentTime }} | {{ duration }} </p>
