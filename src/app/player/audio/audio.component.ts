@@ -100,10 +100,8 @@ export class AudioComponent implements OnInit, AfterViewInit, OnDestroy {
   handleAudioPlayPause() {
     if (this.audio.paused) {
       this.audio.play()
-      // this.paused = true
     } else {
       this.audio.pause()
-      // this.paused = false
     }
   }
 
