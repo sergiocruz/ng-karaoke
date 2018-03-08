@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, SimpleChanges } from '@angular/core'
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core'
 import { Observable, Subscription } from 'rxjs'
 import { PlayerService } from './player.service'
 
@@ -7,15 +7,32 @@ import { PlayerService } from './player.service'
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent {
-
+export class PlayerComponent implements OnChanges {
   @Input() audio: string
   @Input() lyrics: string
   @Input() delay: number
-  onLyricsTimeUpdate = new EventEmitter<number>()
-  onSpeechStart = new EventEmitter<boolean>()
+  public points: number = 0
+  public lines: string[] = []
+  public onLyricsTimeUpdate = new EventEmitter<number>()
+  public onSpeechStart = new EventEmitter<boolean>()
+  private readonly POINTS_MULTIPLIER = 10
+
+  constructor(
+    private PlayerService: PlayerService
+  ) {}
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.PlayerService.hasPropertyChanged(changes.audio)) {
+      this.resetPlayer()
+    }
+  }
+
+  resetPlayer() {
+    this.points = 0
+    this.lines = []
   }
 
   handleAudioPlayPause(isPlaying: boolean) {
@@ -26,8 +43,16 @@ export class PlayerComponent {
     this.onLyricsTimeUpdate.emit(time)
   }
 
+  handleLyricsNewLine = (line) => {
+    // Keep up to last 5 lines in array
+    this.lines = [line].concat(this.lines).slice(0, 5)
+  }
+
   handleSpeechFound(text: string) {
     console.log('speech match: ', text)
+    const matches = this.PlayerService.countMatches(text, this.lines)
+
+    this.points += (matches * this.POINTS_MULTIPLIER)
   }
 
 }

@@ -1,3 +1,5 @@
+Points: {{ points }}
+
 <player-audio
   [src]="audio"
   (onCurrentTimeUpdate)="handleAudioTimeUpdate($event)"
@@ -8,6 +10,7 @@
   [src]="lyrics"
   [delay]="delay"
   [onCurrentTimeUpdate]="onLyricsTimeUpdate"
+  (onNewLine)="handleLyricsNewLine($event)"
   ></player-lyrics>
 
 <player-speech
