@@ -1,10 +1,19 @@
+Points: {{ points }}
+
 <player-audio
   [src]="audio"
   (onCurrentTimeUpdate)="handleAudioTimeUpdate($event)"
+  (onPlayPause)="handleAudioPlayPause($event)"
   ></player-audio>
 
 <player-lyrics
   [src]="lyrics"
   [delay]="delay"
   [onCurrentTimeUpdate]="onLyricsTimeUpdate"
+  (onNewLine)="handleLyricsNewLine($event)"
   ></player-lyrics>
+
+<player-speech
+  [playPause]="onSpeechStart"
+  (onSpeechFound)="handleSpeechFound($event)"
+></player-speech>

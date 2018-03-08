@@ -15,8 +15,9 @@ export class LyricsComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() src: string = ''
   @Input() delay: number = 0
-  @Output() onLoad = new EventEmitter()
   @Input() onCurrentTimeUpdate: EventEmitter<number>
+  @Output() onLoad = new EventEmitter()
+  @Output() onNewLine = new EventEmitter<string>()
   private timeSubscription: Subscription
   public lyrics: LyricLRC
   public currentLine: string = ''
@@ -65,10 +66,15 @@ export class LyricsComponent implements OnInit, OnDestroy, OnChanges {
     currentTime += this.delay
     const { lines } = this.lyrics
     const lineIndex = lines.findIndex((line) => (line.time >= currentTime))
+    const previousLine = this.currentLine
 
     this.currentLine = (lineIndex > 0)
       ? lines[lineIndex - 1].text
       : ''
+
+    if (this.currentLine && this.currentLine !== previousLine) {
+      this.onNewLine.emit(this.currentLine)
+    }
   }
 
 }
