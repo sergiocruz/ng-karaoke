@@ -32,6 +32,7 @@
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
+    "@types/natural": "^0.2.33",
     "@types/node": "~6.0.60",
     "@types/webspeechapi": "0.0.29",
     "codelyzer": "^4.0.1",
