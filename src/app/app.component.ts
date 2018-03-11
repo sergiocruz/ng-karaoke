@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-
 import { SongsService } from './songs/songs.service'
 import { Song } from './songs/song.interface'
+import './natural'
 
 @Component({
   selector: 'app-root',

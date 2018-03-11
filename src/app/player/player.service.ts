@@ -1,6 +1,8 @@
 import { SimpleChange } from '@angular/core'
 import { Injectable } from '@angular/core';
 
+const { Metaphone, SoundEx } = window['natural']
+
 @Injectable()
 export class PlayerService {
 
@@ -13,6 +15,16 @@ export class PlayerService {
    * @memberOf PlayerService
    */
   private readonly ALPHA_REGEX: RegExp = /[^a-z\s]/gi
+
+  /**
+   *
+   * Double spaces regex
+   *
+   * @private
+   * @type {RegExp}
+   * @memberOf PlayerService
+   */
+  private readonly DOUBLESPACES_REGEX: RegExp = /\s\s+/g
 
   /**
    * Defines if whether or not a property has changed
@@ -62,25 +74,42 @@ export class PlayerService {
    * @memberOf PlayerService
    */
   countMatches(speech: string, lines: string[]): number {
-    const speechWordsList = speech.replace(this.ALPHA_REGEX, '').split(' ')
-    const linesWordsList = lines
-      .map((line) => line.replace(this.ALPHA_REGEX, '').split(' '))
-      .reduce((a, b) => a.concat(b), [])
     let matches = 0
 
-    linesWordsList.forEach((word) => {
-      const indexInSpeech = speechWordsList.findIndex((w) => w === word)
+    const speechWordsList = speech
+      .trim()
+      .toLowerCase()
+      .replace(this.ALPHA_REGEX, '')
+      .replace(this.DOUBLESPACES_REGEX, ' ')
+      .split(' ')
 
-      if (indexInSpeech >= 0) {
+    const linesWordsList = lines
+      .map((line) => line
+        .trim()
+        .toLowerCase()
+        .replace(this.ALPHA_REGEX, '')
+        .replace(this.DOUBLESPACES_REGEX, ' ')
+        .split(' ')
+      )
+      .reduce((a, b) => a.concat(b), [])
+
+    // Goes through each word in speech and tries to find a match in lyric lines
+    speechWordsList.forEach((wordFromSpeech) => {
+      const indexInLyrics = linesWordsList.findIndex(
+        (wordFromLyrics) => wordFromSpeech === wordFromLyrics
+          || Metaphone.compare(wordFromSpeech, wordFromLyrics)
+          || SoundEx.compare(wordFromSpeech, wordFromLyrics)
+      )
+
+      if (indexInLyrics >= 0) {
+        console.log('match', wordFromSpeech, linesWordsList[indexInLyrics])
         // remove word from list
-        speechWordsList.splice(indexInSpeech, 1)
+        linesWordsList.splice(indexInLyrics, 1)
 
         // increase number of matches
         matches++
       }
     })
-
-
 
     return matches
   }
