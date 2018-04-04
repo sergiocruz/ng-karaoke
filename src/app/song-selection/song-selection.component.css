@@ -1,0 +1,51 @@
+.songlist-item {
+  margin-bottom: 1rem;
+}
+
+.songlist-item-anchor {
+  align-items: center;
+  border-radius: .25rem;
+  border: 2px solid transparent;
+  color: #444;
+  display: flex;
+  font-size: 16px;
+  padding: 1rem;
+  text-decoration: none;
+  transition: all 250ms ease;
+}
+
+.songlist-item--selected .songlist-item-anchor {
+  border-color: #D76AFF;
+}
+
+.songlist-item-anchor:hover {
+  border-color: #F3E0FA;
+}
+
+.songlist-item-avatar {
+  height: 70px;
+  width: 70px;
+  background-color: #c46bed;
+  background-size: 100%;
+  margin-right: 1rem;
+  border-radius: .25rem;
+}
+
+.songlist-item:nth-child(1) .songlist-item-avatar {
+  background-image: url(/assets/images/artist-1.jpg);
+}
+
+.songlist-item:nth-child(2) .songlist-item-avatar {
+  background-image: url(/assets/images/artist-2.jpg);
+}
+
+.songlist-item-details-title,
+.songlist-item-details-artist {
+  display: block;
+}
+
+.songlist-item-details-artist {
+  color: #5AA8CD;
+  font-size: 14px;
+  margin-top: .75rem;
+}

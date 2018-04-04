@@ -1,0 +1,11 @@
+<ul class="songlist">
+  <li class="songlist-item" *ngFor="let song of songList" [class.songlist-item--selected]="currentSong === song">
+    <a href="" (click)="handleChooseSong($event, song)" class="songlist-item-anchor">
+      <span class="songlist-item-avatar"></span>
+      <span class="songlist-item-details">
+        <span class="songlist-item-details-title">{{ song.title }}</span>
+        <span class="songlist-item-details-artist">{{ song.artist }}</span>
+      </span>
+    </a>
+  </li>
+</ul>

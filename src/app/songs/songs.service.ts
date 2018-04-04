@@ -10,7 +10,7 @@ export class SongsService {
   private readonly songList: Song[] = [
     {
       artist: 'Rick Astley',
-      title: 'Never gonna give you up',
+      title: 'Never Gonna Give You Up',
       audio: '/assets/songs/never-gonna-give-you-up/never-gonna-give-you-up.mp3',
       lyrics: '/assets/songs/never-gonna-give-you-up/never-gonna-give-you-up.lrc',
       lyricDelay: 1,

@@ -1,15 +1,24 @@
-<h1>Karaoke</h1>
+<div class="app">
 
-<ul>
-  <li *ngFor="let song of songList">
-    <a href="#" (click)="handleChooseSong($event, song)">{{ song.artist }} - {{ song.title }}</a>
-  </li>
-</ul>
+  <div class="app-nav">
+    <img src="/assets/images/karaoke-title.png" alt="Karaoke" class="app-nav-img" />
+  </div>
 
-<div *ngIf="currentSong">
-  <Player
-    [audio]="currentSong.audio"
-    [lyrics]="currentSong.lyrics"
-    [delay]="currentSong.lyricDelay"
-    ></Player>
+  <div class="app-body">
+    <aside class="app-body-sidebar p1">
+      <song-selection
+        [songList]="songList"
+        [currentSong]="currentSong"
+        (onChooseSong)="handleChooseSong($event)"></song-selection>
+    </aside>
+
+    <section class="app-body-content p1">
+      <div *ngIf="currentSong">
+        <Player
+          [audio]="currentSong.audio"
+          [lyrics]="currentSong.lyrics"
+          [delay]="currentSong.lyricDelay"></Player>
+        </div>
+    </section>
+  </div>
 </div>
