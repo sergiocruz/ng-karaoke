@@ -9,7 +9,8 @@ import { AudioComponent } from './player/audio/audio.component';
 import { LyricsComponent } from './player/lyrics/lyrics.component'
 import { SongsService } from './songs/songs.service';
 import { SpeechComponent } from './player/speech/speech.component'
-import { RecognitionService } from './player/speech/recognition.service'
+import { RecognitionService } from './player/speech/recognition.service';
+import { SongSelectionComponent } from './song-selection/song-selection.component'
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { RecognitionService } from './player/speech/recognition.service'
     PlayerComponent,
     AudioComponent,
     LyricsComponent,
-    SpeechComponent
+    SpeechComponent,
+    SongSelectionComponent
   ],
   imports: [
     BrowserModule,

@@ -21,8 +21,7 @@ export class AppComponent {
     this.songList = this.Songs.getSongList()
   }
 
-  handleChooseSong($event: Event, song: Song) {
-    $event.preventDefault()
+  handleChooseSong(song: Song) {
     this.currentSong = song
   }
 }

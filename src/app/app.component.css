@@ -1,0 +1,27 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-nav {
+  background: linear-gradient(45deg, #4a7bcf, #6ad3cc 65%);
+  padding: 15px;
+}
+
+.app-nav-img {
+  max-width: 400px;
+  width: 100%;
+}
+
+.app-body {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  background: #f5f5f5;
+}
+
+.app-body-sidebar {
+  background-color: #fff;
+  min-width: 350px;
+}
