@@ -1,19 +1,38 @@
-Points: {{ points }}
+<div class="player">
 
-<player-audio
-  [src]="audio"
-  (onCurrentTimeUpdate)="handleAudioTimeUpdate($event)"
-  (onPlayPause)="handleAudioPlayPause($event)"
-  ></player-audio>
+  <div class="player-info p2">
+    <div class="player-info-song">
+      <p class="player-info-song-title">{{ currentSong.title }}</p>
+      <p class="player-info-song-artist">{{ currentSong.artist }}</p>
+    </div>
 
-<player-lyrics
-  [src]="lyrics"
-  [delay]="delay"
-  [onCurrentTimeUpdate]="onLyricsTimeUpdate"
-  (onNewLine)="handleLyricsNewLine($event)"
-  ></player-lyrics>
+    <div class="player-info-points">
+      <player-points [points]="points"></player-points>
+    </div>
+  </div>
 
-<player-speech
-  [playPause]="onSpeechStart"
-  (onSpeechFound)="handleSpeechFound($event)"
-></player-speech>
+  <div class="player-screen">
+    <div class="player-screen-lyrics p1">
+      <player-lyrics
+        [src]="currentSong.lyrics"
+        [delay]="currentSong.lyricDelay"
+        [onCurrentTimeUpdate]="onLyricsTimeUpdate"
+        (onNewLine)="handleLyricsNewLine($event)"
+        ></player-lyrics>
+    </div>
+
+    <div class="player-screen-controls p2">
+      <player-audio
+        [src]="currentSong.audio"
+        (onCurrentTimeUpdate)="handleAudioTimeUpdate($event)"
+        (onPlayPause)="handleAudioPlayPause($event)"
+        ></player-audio>
+
+      <player-speech
+        [playPause]="onSpeechStart"
+        (onSpeechFound)="handleSpeechFound($event)"
+      ></player-speech>
+    </div>
+  </div>
+</div>
+

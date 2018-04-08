@@ -1,24 +1,20 @@
 <div class="app">
+  <div class="p1">
+    <div class="app-nav">
+      <img src="/assets/images/karaoke-title.png" alt="Karaoke" class="app-nav-img" />
+    </div>
 
-  <div class="app-nav">
-    <img src="/assets/images/karaoke-title.png" alt="Karaoke" class="app-nav-img" />
-  </div>
+    <div class="app-body">
+      <div class="app-body-content" *ngIf="currentSong">
+        <Player [currentSong]="currentSong"></Player>
+      </div>
 
-  <div class="app-body">
-    <aside class="app-body-sidebar p1">
-      <song-selection
-        [songList]="songList"
-        [currentSong]="currentSong"
-        (onChooseSong)="handleChooseSong($event)"></song-selection>
-    </aside>
-
-    <section class="app-body-content p1">
-      <div *ngIf="currentSong">
-        <Player
-          [audio]="currentSong.audio"
-          [lyrics]="currentSong.lyrics"
-          [delay]="currentSong.lyricDelay"></Player>
-        </div>
-    </section>
+      <div class="app-body-sidebar p1" *ngIf="!currentSong">
+        <song-selection
+          [songList]="songList"
+          [currentSong]="currentSong"
+          (onChooseSong)="handleChooseSong($event)"></song-selection>
+      </div>
+    </div>
   </div>
 </div>

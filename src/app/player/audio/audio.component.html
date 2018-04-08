@@ -1,5 +1,9 @@
-<button (click)="handleAudioPlayPause()">
+<div class="duration">
+  <span>{{ currentTime }}</span>
+  <span class="duration-divider">|</span>
+  <span>{{ duration }}</span>
+</div>
+
+<button class="btnplaypause" (click)="handleAudioPlayPause()">
   {{ (isPlaying) ? "Pause" : "Play" }}
 </button>
-
-<p>{{ currentTime }} | {{ duration }} </p>

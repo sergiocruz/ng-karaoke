@@ -1,0 +1,22 @@
+@import "fireworks.css";
+
+.points {
+  position: relative;
+}
+
+
+.points-score {
+  color: #c46bed;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.points-score small {
+  font-size: .75rem;
+}
+
+.points-score strong {
+  font-size: 2rem;
+}

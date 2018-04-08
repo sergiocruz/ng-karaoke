@@ -6,6 +6,11 @@ import * as LRC from 'lrc.js'
 import { LyricLRC } from './LyricLRC.interface'
 import { PlayerService } from '../player.service';
 
+export interface Line {
+  index: number,
+  text: string,
+}
+
 @Component({
   selector: 'player-lyrics',
   templateUrl: './lyrics.component.html',
@@ -20,7 +25,8 @@ export class LyricsComponent implements OnInit, OnDestroy, OnChanges {
   @Output() onNewLine = new EventEmitter<string>()
   private timeSubscription: Subscription
   public lyrics: LyricLRC
-  public currentLine: string = ''
+  public currentLineIndex: number = -1
+  public lines: Line[] = []
 
   constructor(
     private service: PlayerService,
@@ -54,7 +60,8 @@ export class LyricsComponent implements OnInit, OnDestroy, OnChanges {
 
   processLyrics(lrcText) {
     this.lyrics = LRC.parse(lrcText)
-    this.currentLine = ''
+    this.currentLineIndex = -1
+    this.lines = []
     this.onLoad.emit()
   }
 
@@ -66,14 +73,31 @@ export class LyricsComponent implements OnInit, OnDestroy, OnChanges {
     currentTime += this.delay
     const { lines } = this.lyrics
     const lineIndex = lines.findIndex((line) => (line.time >= currentTime))
-    const previousLine = this.currentLine
+    const previousLine = lines[this.currentLineIndex]
+    const nextLine = lines[lineIndex]
+    const currentLineIndex = (lineIndex - 1)
+    const currentLine = (lineIndex > 0)
+      ? lines[currentLineIndex]
+      : null
 
-    this.currentLine = (lineIndex > 0)
-      ? lines[lineIndex - 1].text
-      : ''
 
-    if (this.currentLine && this.currentLine !== previousLine) {
-      this.onNewLine.emit(this.currentLine)
+    if (currentLine && currentLine !== previousLine) {
+      this.currentLineIndex = currentLineIndex
+      this.onNewLine.emit(currentLine.text)
+
+      if (!this.lines.length) {
+        this.lines.push({ index: currentLineIndex, text: currentLine.text })
+      }
+
+      if (nextLine) {
+        const lines = this.lines.concat([ { index: lineIndex, text: nextLine.text } ])
+
+        if (lines.length >= 4) {
+          lines.shift()
+        }
+
+        this.lines = lines
+      }
     }
   }
 

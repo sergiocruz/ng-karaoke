@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core'
 import { Observable, Subscription } from 'rxjs'
 import { PlayerService } from './player.service'
+import { Song } from '../songs/song.interface';
 
 @Component({
   selector: 'Player',
@@ -8,14 +9,12 @@ import { PlayerService } from './player.service'
   styleUrls: ['./player.component.css']
 })
 export class PlayerComponent implements OnChanges {
-  @Input() audio: string
-  @Input() lyrics: string
-  @Input() delay: number
+  @Input() currentSong: Song
   public points: number = 0
   public lines: string[] = []
   public onLyricsTimeUpdate = new EventEmitter<number>()
   public onSpeechStart = new EventEmitter<boolean>()
-  private readonly POINTS_MULTIPLIER = 10
+  private readonly POINTS_MULTIPLIER = 5
 
   constructor(
     private PlayerService: PlayerService
@@ -25,7 +24,7 @@ export class PlayerComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.PlayerService.hasPropertyChanged(changes.audio)) {
+    if (this.PlayerService.hasPropertyChanged(changes.currentSong)) {
       this.resetPlayer()
     }
   }
@@ -49,7 +48,7 @@ export class PlayerComponent implements OnChanges {
   }
 
   handleSpeechFound(text: string) {
-    console.log('speech match: ', text)
+    console.log('[speech match]: ', text)
     const matches = this.PlayerService.countMatches(text, this.lines)
 
     this.points += (matches * this.POINTS_MULTIPLIER)

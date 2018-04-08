@@ -33,9 +33,11 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
-  line-height: 1;
+  background: linear-gradient(45deg, #4a7bcf, #6ad3cc 65%);
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+  line-height: 1.4;
+  min-height: 100vh;
 }
 
 ol, ul {
@@ -63,6 +65,10 @@ table {
  */
 .p1 {
   padding: 1rem;
+}
+
+.p2 {
+  padding: 1.75rem;
 }
 
 .m1 {

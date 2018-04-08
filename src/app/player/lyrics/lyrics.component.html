@@ -1,4 +1,5 @@
 <div *ngIf="lyrics">
-  <h3>{{ lyrics.ar }} - {{ lyrics.ti }}</h3>
-  <p>{{ currentLine }}</p>
+  <p *ngFor="let line of lines" [class.active]="line.index === currentLineIndex">
+    {{ line.text }}
+  </p>
 </div>
