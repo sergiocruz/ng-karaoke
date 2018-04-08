@@ -1,5 +1,7 @@
 import { SimpleChange } from '@angular/core'
 import { Injectable } from '@angular/core';
+import { Observable, Scheduler, Subject, Subscription } from 'rxjs'
+import { scan, map, withLatestFrom, distinctUntilChanged } from 'rxjs/operators'
 
 const { Metaphone, SoundEx } = window['natural']
 
@@ -102,7 +104,7 @@ export class PlayerService {
       )
 
       if (indexInLyrics >= 0) {
-        console.log('match', wordFromSpeech, linesWordsList[indexInLyrics])
+        // console.log('match', wordFromSpeech, linesWordsList[indexInLyrics])
         // remove word from list
         linesWordsList.splice(indexInLyrics, 1)
 
@@ -112,6 +114,21 @@ export class PlayerService {
     })
 
     return matches
+  }
+
+  pointsAnimator(value$: Subject<number>) {
+    const tick$ = Observable.interval(0, Scheduler.animationFrame)
+    const lerpValue$ = tick$.pipe(
+      withLatestFrom(value$, (_, value) => value),
+      scan(
+        (prev, current) => prev + (current - prev) * .05,
+        0
+      ),
+      map((n) => Math.round(n)),
+      distinctUntilChanged()
+    )
+
+    return lerpValue$
   }
 
 }

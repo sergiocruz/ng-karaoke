@@ -1,3 +1,8 @@
+.songlist {
+  max-width: 400px;
+  margin: auto;
+}
+
 .songlist-item {
   margin-bottom: 1rem;
 }

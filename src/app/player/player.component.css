@@ -1,0 +1,46 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player-info-song-title {
+  color: #444444;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+.player-info-song-artist {
+  color: #5AA8CD;
+  font-size: 1rem;
+}
+
+.player-screen-lyrics {
+  background-color: #474747;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-screen-controls {
+  background-color: #3c66b0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 5;
+  justify-content: center;
+}

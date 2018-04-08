@@ -12,7 +12,7 @@ export class RecognitionService {
       return RecognitionService.recognition
     }
 
-    const recognition = new webkitSpeechRecognition()
+    const recognition = new (window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition'])() as SpeechRecognition
     recognition.continuous = true
     recognition.interimResults = true
 
