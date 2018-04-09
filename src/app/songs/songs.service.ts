@@ -11,15 +11,15 @@ export class SongsService {
     {
       artist: 'Rick Astley',
       title: 'Never Gonna Give You Up',
-      audio: '/assets/songs/never-gonna-give-you-up/never-gonna-give-you-up.mp3',
-      lyrics: '/assets/songs/never-gonna-give-you-up/never-gonna-give-you-up.lrc',
+      audio: 'assets/songs/never-gonna-give-you-up/never-gonna-give-you-up.mp3',
+      lyrics: 'assets/songs/never-gonna-give-you-up/never-gonna-give-you-up.lrc',
       lyricDelay: 1,
     },
     {
       artist: 'Journey',
       title: 'Don\'t Stop Believing',
-      audio: '/assets/songs/dont-stop-believing/dont-stop-believing.mp3',
-      lyrics: '/assets/songs/dont-stop-believing/dont-stop-believing.lrc',
+      audio: 'assets/songs/dont-stop-believing/dont-stop-believing.mp3',
+      lyrics: 'assets/songs/dont-stop-believing/dont-stop-believing.lrc',
       lyricDelay: 2.5,
     },
   ]
