@@ -20,7 +20,7 @@ export class SongsService {
       title: 'Don\'t Stop Believing',
       audio: 'assets/songs/dont-stop-believing/dont-stop-believing.mp3',
       lyrics: 'assets/songs/dont-stop-believing/dont-stop-believing.lrc',
-      lyricDelay: 2.5,
+      lyricDelay: 1,
     },
   ]
 
