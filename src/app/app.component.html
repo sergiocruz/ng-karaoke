@@ -9,12 +9,16 @@
         <Player [currentSong]="currentSong"></Player>
       </div>
 
-      <div class="app-body-sidebar p1" *ngIf="!currentSong">
+      <div class="app-body-songlist p1" *ngIf="!currentSong">
         <song-selection
           [songList]="songList"
           [currentSong]="currentSong"
           (onChooseSong)="handleChooseSong($event)"></song-selection>
       </div>
     </div>
+
+    <button class="app-backbutton" *ngIf="currentSong" (click)="handleClearCurrentSong()">
+      ← Back to list of songs
+    </button>
   </div>
 </div>

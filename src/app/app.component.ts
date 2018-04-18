@@ -24,4 +24,8 @@ export class AppComponent {
   handleChooseSong(song: Song) {
     this.currentSong = song
   }
+
+  handleClearCurrentSong() {
+    this.currentSong = null
+  }
 }
